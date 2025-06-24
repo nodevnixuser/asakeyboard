@@ -13,6 +13,7 @@ declare -A hid_usage_id=(
     ["0x54"]="0x17" ["0x55"]="0x18" ["0x56"]="0x19" ["0x57"]="0x1A" ["0x58"]="0x1B"
     ["0x59"]="0x1C" ["0x5A"]="0x1D" ["0x30"]="0x27" ["0x31"]="0x1E" ["0x32"]="0x1F" ["0x33"]="0x20" ["0x34"]="0x21"
     ["0x35"]="0x22" ["0x36"]="0x23" ["0x37"]="0x24" ["0x38"]="0x25" ["0x39"]="0x26"
+    ["0x0d"]="0x28" ["0x0a"]="0x28"  # Enter tuşu
 )
 
 declare -A escape_to_hid=(
@@ -95,7 +96,7 @@ stdbuf -oL showkey -a | while read -r line; do
                 echo "Hex value: 0x$hex_value, HID Usage ID: $hid_value (Shifted)"
             else
                 echo "Hex value: 0x$hex_value, HID Usage ID: $hid_value"
-                                third_byte=$(printf "%02x" $((hid_value & 0xff)))
+                third_byte=$(printf "%02x" $((hid_value & 0xff)))
 
                 echo -ne "\x00\x00\x${third_byte}\x00\x00\x00\x00\x00" > /dev/hidg0
                 echo -ne "\x00\x00\x00\x00\x00\x00\x00\x00" > /dev/hidg0
